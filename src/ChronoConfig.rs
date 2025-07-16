@@ -78,24 +78,6 @@ impl Config {
                                 })
                             {
                                 config_from_file.password = Some(SecretString::from(password));
-                            } else {
-                                return Err(NoPassword {});
-                                /*
-                                println!("No stored password found.");
-                                let new_password = Password::new(&format!(
-                                    "Enter password for user {}: ",
-                                    &config_from_file.user_name
-                                ))
-                                .with_display_toggle_enabled()
-                                .without_confirmation()
-                                .with_display_mode(PasswordDisplayMode::Hidden)
-                                .with_formatter(&|_| String::from("Input received"))
-                                .prompt()
-                                .context(ObtainPasswordFromUserSnafu {})?;
-                                password_entry
-                                    .set_password(&new_password)
-                                    .context(SetPasswordFromEntrySnafu {})?;
-                                */
                             };
                         }
 
