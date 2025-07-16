@@ -80,6 +80,7 @@ impl Config {
                                 config_from_file.password = Some(SecretString::from(password));
                             } else {
                                 return Err(NoPassword {});
+                                /*
                                 println!("No stored password found.");
                                 let new_password = Password::new(&format!(
                                     "Enter password for user {}: ",
@@ -94,6 +95,7 @@ impl Config {
                                 password_entry
                                     .set_password(&new_password)
                                     .context(SetPasswordFromEntrySnafu {})?;
+                                */
                             };
                         }
 
@@ -111,10 +113,11 @@ impl Config {
         Ok(config_from_file)
     }
     
-    pub fn save_password(&self, password: &str) -> Result<(), Error> {
+    pub fn save_password(&mut self, password: &str) -> Result<(), Error> {
         match Entry::new("tech.stackable.chronos", &self.user_name) {
             Ok(entry) => {
                 entry.set_password(password).context(SetPasswordFromEntrySnafu)?;
+                self.password = Some(SecretString::from(password));
             }
             Err(_) => {}
         }
